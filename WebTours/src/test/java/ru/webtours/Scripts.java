@@ -1,12 +1,10 @@
 package ru.webtours;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.sql.Driver;
+import java.util.Random;
 
 public class Scripts extends WebElements {
 
@@ -14,34 +12,45 @@ public class Scripts extends WebElements {
 
     public Scripts(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.driver = driver; }
+        this.driver = driver;
+    }
 
-
+    //Авторизация
     public void userlogin(String log, String pass){
         login.sendKeys(log);
         password.sendKeys(pass);
-        but.click();
+        cont.click();
     }
-
+    //Главная страница
     public void flightsZero(){
-        but0.click();
+        flb.click();
     }
-
+    //Первая страница покупки билетов
     public void flightsFirst(){
-        but1.click();
+        WebElement re1 = rbfp1.get(new Random().nextInt(rbfp1.size()));
+        WebElement re2 = rbfp2.get(new Random().nextInt(rbfp2.size()));
+        WebElement re3 = rbfp3.get(new Random().nextInt(rbfp3.size()));
+        WebElement re4 = rbfp4.get(new Random().nextInt(rbfp4.size()));
+        re1.click();
+        re2.click();
+        re3.click();
+        re4.click();
+        cont.click();
     }
-
+    //Вторая страница покупки билетов
     public void flightsSecond(){
-        but2.click();
+        WebElement re3 = rbsp.get(new Random().nextInt(rbsp.size()));
+        re3.click();
+        cont.click();
     }
-
+    //Третья страница покупки билетов
     public void flightsThird(String crd, String exdat){
         cc.sendKeys(crd);
         ed.sendKeys(exdat);
-        but3.click();
+        cont.click();
     }
-
+    //Деавторизация
     public void userlogout(){
-        but4.click();
+        sofb.click();
     }
 }
