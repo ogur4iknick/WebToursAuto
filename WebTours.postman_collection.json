@@ -1,0 +1,643 @@
+{
+	"info": {
+		"_postman_id": "4b0fc9ad-849b-4468-a4d5-4193ec8c19f9",
+		"name": "WebTours",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Заход на сайт",
+			"item": [
+				{
+					"name": "{{url}}/cgi-bin/welcome.pl?signOff=true ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/welcome.pl?signOff=true ",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"welcome.pl"
+							],
+							"query": [
+								{
+									"key": "signOff",
+									"value": "true "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/nav.pl?in=home",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const $ = cheerio.load(responseBody);\r",
+									"console.log($(\"input[name='userSession']\").val());\r",
+									"pm.environment.set(\"userSession\",$(\"input[name='userSession']\").val());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/nav.pl?in=home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"nav.pl"
+							],
+							"query": [
+								{
+									"key": "in",
+									"value": "home"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Авторизация",
+			"item": [
+				{
+					"name": "{{url}}/cgi-bin/login.pl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userSession",
+									"value": "{{userSession}}",
+									"type": "default"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "default"
+								},
+								{
+									"key": "login.x",
+									"value": "{{loginx}}",
+									"type": "default"
+								},
+								{
+									"key": "login.y",
+									"value": "{{loginy}}",
+									"type": "default"
+								},
+								{
+									"key": "JSFormSubmit",
+									"value": "{{JSFormSubmit}}",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cgi-bin/login.pl",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"login.pl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/nav.pl?page=menu&in=home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/nav.pl?page=menu&in=home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"nav.pl"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "menu"
+								},
+								{
+									"key": "in",
+									"value": "home"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/login.pl?intro=true",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/login.pl?intro=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"login.pl"
+							],
+							"query": [
+								{
+									"key": "intro",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Переход на страницу покупки",
+			"item": [
+				{
+					"name": "{{url}}/cgi-bin/welcome.pl?page=search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/welcome.pl?page=search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"welcome.pl"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "search"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/reservations.pl?page=welcome",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const dD = cheerio.load(responseBody);\r",
+									"console.log(dD(\"input[name='departDate']\").val());\r",
+									"pm.environment.set(\"departDate\",dD(\"input[name='departDate']\").val());\r",
+									"\r",
+									"const rD = cheerio.load(responseBody);\r",
+									"console.log(rD(\"input[name='returnDate']\").val());\r",
+									"pm.environment.set(\"returnDate\",rD(\"input[name='returnDate']\").val());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/reservations.pl?page=welcome",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"reservations.pl"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "welcome"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/nav.pl?page=menu&in=flights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/nav.pl?page=menu&in=flights",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"nav.pl"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "menu"
+								},
+								{
+									"key": "in",
+									"value": "flights"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Покупка билета",
+			"item": [
+				{
+					"name": "{{url}}/cgi-bin/reservations.pl",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"/*var depart = pm.environment.get(\"depart\")\r",
+									"if (!depart){\r",
+									"    depart = [\"Denver\", \"Frankfurt\", \"London\", \"Los Angeles\", \"Paris\", \"Portland\", \"San Fransico\", \"Seatlle\", \"Sydney\", \"Zurich\"];\r",
+									"} \r",
+									"var current_dep = depart.shift();\r",
+									"pm.environment.set(\"current_depart\", current_dep)\r",
+									"pm.environment.set(\"depart\", depart)*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*var depart = pm.environment.get(\"depart\")\r",
+									"\r",
+									"if (depart && depart.length > 0) {\r",
+									"    postman.setNextRequest(\"{{url}}/cgi-bin/reservations.pl\");\r",
+									"} else {\r",
+									"    postman.setNextRequest(null);\r",
+									"}*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "advanceDiscount",
+									"value": "{{advanceDiscount}}",
+									"type": "default"
+								},
+								{
+									"key": "depart",
+									"value": "{{depart}}",
+									"type": "default"
+								},
+								{
+									"key": "departDate",
+									"value": "{{departDate}}",
+									"type": "default"
+								},
+								{
+									"key": "arrive",
+									"value": "{{arrive}}",
+									"type": "default"
+								},
+								{
+									"key": "returnDate",
+									"value": "{{returnDate}}",
+									"type": "default"
+								},
+								{
+									"key": "numPassengers",
+									"value": "{{numPassengers}}",
+									"type": "default"
+								},
+								{
+									"key": "seatPref",
+									"value": "{{seatPref}}",
+									"type": "default"
+								},
+								{
+									"key": "seatType",
+									"value": "{{seatType}}",
+									"type": "default"
+								},
+								{
+									"key": "findFlights.x",
+									"value": "{{findFlightsx}}",
+									"type": "default"
+								},
+								{
+									"key": "findFlights.y",
+									"value": "{{findFlightsy}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/cgi-bin/reservations.pl",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"reservations.pl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/reservations.pl 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "outboundFlight",
+									"value": "{{outboundFlight}}",
+									"type": "default"
+								},
+								{
+									"key": "numPassengers",
+									"value": "{{numPassengers}}",
+									"type": "default"
+								},
+								{
+									"key": "advanceDiscount",
+									"value": "{{advanceDiscount}}",
+									"type": "default"
+								},
+								{
+									"key": "seatType",
+									"value": "{{seatType}}",
+									"type": "default"
+								},
+								{
+									"key": "seatPref",
+									"value": "{{seatPref}}",
+									"type": "default"
+								},
+								{
+									"key": "reserveFlights.x",
+									"value": "{{reserveFlightsx}}",
+									"type": "default"
+								},
+								{
+									"key": "reserveFlights.y",
+									"value": "{{reserveFlightsy}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/cgi-bin/reservations.pl",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"reservations.pl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/reservations.pl 3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "{{firstName}}",
+									"type": "default"
+								},
+								{
+									"key": "lastName",
+									"value": "{{lastName}}",
+									"type": "default"
+								},
+								{
+									"key": "address1",
+									"value": "{{address1}}",
+									"type": "default"
+								},
+								{
+									"key": "address2",
+									"value": "{{address2}}",
+									"type": "default"
+								},
+								{
+									"key": "pass1",
+									"value": "{{pass1}}",
+									"type": "default"
+								},
+								{
+									"key": "creditCard",
+									"value": "{{creditCard}}",
+									"type": "default"
+								},
+								{
+									"key": "expDate",
+									"value": "{{expDate}}",
+									"type": "default"
+								},
+								{
+									"key": "numPassengers",
+									"value": "{{numPassengers}}",
+									"type": "default"
+								},
+								{
+									"key": "seatType",
+									"value": "{{seatType}}",
+									"type": "default"
+								},
+								{
+									"key": "seatPref",
+									"value": "{{seatPref}}",
+									"type": "default"
+								},
+								{
+									"key": "outboundFlight",
+									"value": "{{outboundFlight}}",
+									"type": "default"
+								},
+								{
+									"key": "advanceDiscount",
+									"value": "{{advanceDiscount}}",
+									"type": "default"
+								},
+								{
+									"key": "returnFlight",
+									"value": "{{returnFlight}}",
+									"type": "default"
+								},
+								{
+									"key": "JSFormSubmit",
+									"value": "{{JSFormSubmit}}",
+									"type": "default"
+								},
+								{
+									"key": "buyFlights.x",
+									"value": "{{buyFlightsx}}",
+									"type": "default"
+								},
+								{
+									"key": "buyFlights.y",
+									"value": "{{buyFlightsy}}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/cgi-bin/reservations.pl",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"reservations.pl"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Выход из профиля",
+			"item": [
+				{
+					"name": "{{url}}/cgi-bin/welcome.pl?signOff=1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/welcome.pl?signOff=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"welcome.pl"
+							],
+							"query": [
+								{
+									"key": "signOff",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/cgi-bin/nav.pl?in=home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cgi-bin/nav.pl?in=home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cgi-bin",
+								"nav.pl"
+							],
+							"query": [
+								{
+									"key": "in",
+									"value": "home"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "randomNum",
+			"value": ""
+		}
+	]
+}
